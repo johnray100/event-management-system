@@ -1,0 +1,4 @@
+package jay.event_management_system;
+
+public class ApplicationController {
+}

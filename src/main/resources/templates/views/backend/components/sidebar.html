@@ -1,0 +1,161 @@
+<component th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org">
+
+    <!--start sidebar-->
+    <div id="sidebar" class='active'>
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header" style="display: flex; justify-content: center; align-items: center;">
+                <img src="/assets/images/avatar/batman_hero.png" alt="" srcset="" style="width: 100px; height: 100px;">
+            </div>
+
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class='sidebar-title'>Main Menu</li>
+
+                    <!--dashboard-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'dashboard'} ? ' active' : ''">
+                        <a href="dashboard" class='sidebar-link'>
+                            <i data-feather="home" width="20"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <!--membership-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'membership'} ? ' active' : ''">
+                        <a href="membership" class='sidebar-link'>
+                            <i data-feather="user-plus" width="20"></i>
+                            <span>Membership</span>
+                        </a>
+                    </li>
+
+                    <!--publisher-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'publisher'} ? ' active' : ''">
+                        <a href="/publisher" class='sidebar-link'>
+                            <i data-feather="user" width="20"></i>
+                            <span>Publisher</span>
+                        </a>
+                    </li>
+
+                    <!--books-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'books'} ? ' active' : ''">
+                        <a href="/books" class='sidebar-link'>
+                            <i data-feather="book" width="20"></i>
+                            <span>Books</span>
+                        </a>
+                    </li>
+
+                    <!--categories-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'categories'} ? ' active' : ''">
+                        <a href="/categories" class='sidebar-link'>
+                            <i data-feather="briefcase" width="20"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+
+                    <!--author-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'authors'} ? ' active' : ''">
+                        <a href="/author" class='sidebar-link'>
+                            <i data-feather="users" width="20"></i>
+                            <span>Authors</span>
+                        </a>
+                    </li>
+
+
+                    <!--reservation-->
+                    <li class="sidebar-item " th:classappend="${activePage == 'reservation'} ? ' active' : ''">
+                        <a href="reservations" class='sidebar-link'>
+                            <i data-feather="plus-square" width="20"></i>
+                            <span>Reservation</span>
+                        </a>
+                    </li>
+
+                    <!--staff-->
+                    <li class="sidebar-item " th:classappend="${activePage == 'staff'} ? ' active' : ''">
+                        <a href="staff" class='sidebar-link'>
+                            <i data-feather="users" width="20"></i>
+                            <span>Staff</span>
+                        </a>
+                    </li>
+
+                    <!--loans-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'loans'} ? ' active' : ''">
+                        <a href="loans" class='sidebar-link'>
+                            <i data-feather="dollar-sign" width="20"></i>
+                            <span>Loans</span>
+                        </a>
+                    </li>
+
+                    <!--fines-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'fines'} ? ' active' : ''">
+                        <a href="fines" class='sidebar-link'>
+                            <i data-feather="check" width="20"></i>
+                            <span>Fines</span>
+                        </a>
+                    </li>
+
+                    <!--library branches-->
+                    <li class="sidebar-item" th:classappend="${activePage == 'library-branch'} ? ' active' : ''">
+                        <a href="library-branches" class='sidebar-link'>
+                            <i data-feather="map-pin" width="20"></i>
+                            <span>Library Branches</span>
+                        </a>
+                    </li>
+
+                    <li class='sidebar-title'>Extra UI</li>
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i data-feather="trending-up" width="20"></i>
+                            <span>Charts</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li>
+                                <a href="/dashboard">ChartJS</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class='sidebar-title'>Pages</li>
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i data-feather="user" width="20"></i>
+                            <span>Authentication</span>
+                        </a>
+                        <ul class="submenu">
+                            <li th:classappend="${activePage == 'auth-login'} ? ' active' : ''">
+                                <a href="auth-login">Login</a>
+                            </li>
+                            <li th:classappend="${activePage == 'auth-register'} ? ' active' : ''">
+                                <a href="auth-register">Register</a>
+                            </li>
+                            <li th:classappend="${activePage == 'auth-forgot-password'} ? ' active' : ''">
+                                <a href="auth-forgot-password">Forgot Password</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i data-feather="alert-circle" width="20"></i>
+                            <span>Errors</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li>
+                                <a href="./pages/error-403">403</a>
+                            </li>
+                            <li>
+                                <a href="./pages/error-404">404</a>
+                            </li>
+                            <li>
+                                <a href="./pages/error-500">500</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+        </div>
+    </div>
+    <!--end sidebar-->
+
+</component>

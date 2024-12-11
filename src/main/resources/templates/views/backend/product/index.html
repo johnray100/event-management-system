@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+<head>
+    <include th:replace="views/backend/components/meta :: meta"></include>
+
+    <title>Inventory Management System</title>
+
+    <include th:replace="views/backend/components/style :: styles"></include>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!-- navbar -->
+    <include th:replace="views/backend/components/navbar :: navbar"></include>
+    <!-- sidebar -->
+    <include th:replace="views/backend/components/sidebar :: sidebar"></include>
+
+    <!-- content wrapper -->
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <a href="/add-product" class="btn bg-lightblue"><i class="fas fa-plus-square"></i> Add Product</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Product</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Header (Page header) -->
+
+
+        <!-- Main content -->
+        <section class="content">
+            <!--contain table-->
+            <div class="section-body mt-3">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                        <div class="col-lg-12">
+                            <div class="card card-lightblue card-outline">
+                                <div class="card-body">
+                                    <div class="box box-primary">
+                                        <div class="box-body">
+
+                                            <!-- Search Form -->
+                                            <form th:action="@{/search}" method="get" class="mb-4">
+                                                <div class="input-group">
+                                                    <input type="text" name="keyword" th:value="${keyword}" placeholder="Search by name" class="form-control" required>
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fa fa-search"></i> Search
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                            <table class="table table-hover text-center" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Category</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <!-- Display rows if the productList is not empty -->
+                                                <tr th:each="row : ${productList}">
+                                                    <td th:text="${row.id}"></td>
+                                                    <td th:text="${row.productName}"></td>
+                                                    <td th:text="${row.category.categoryName}"></td>
+                                                    <td th:text="${row.quantity}"></td>
+                                                    <td th:text="${row.price}"></td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-outline-primary btn-sm"
+                                                                    th:attr="onclick=|confirmUpdate(${row.id})|">
+                                                                <i class="fa fa-pencil-alt"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger btn-sm" style="margin-left: 5px"
+                                                                    th:attr="onclick=|confirmDelete(${row.id})|">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- No Products Found Message -->
+                                                <tr th:if="${#lists.isEmpty(productList)}">
+                                                    <td colspan="6">No Products exist!</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end contain table-->
+
+
+            <!-- delete modal -->
+<!--            <div id="deleteModal" class="modal fade delete-modal animated rubberBand" role="dialog">-->
+<!--                <div class="modal-dialog modal-dialog-centered">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-body text-center">-->
+<!--                            <img src="../../../vendors/assets/img/sent.png" alt="" width="50" height="46">-->
+<!--                            <h3>Are you sure want to delete this Records?</h3>-->
+<!--                            <div class="m-t-20">-->
+<!--                                <a type="#" class="btn bg-white btn-rounded" data-dismiss="modal"><i class="fa fa-times"></i> Close</a>-->
+<!--                                <a type="submit" class="btn btn-outline-danger btn-rounded" id="delRef"><i class="fa fa-trash"></i>-->
+<!--                                    Delete</a>-->
+<!--                                <input type="hidden" name="id">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--end pop up delete-->
+
+
+        </section>
+        <!--end of main content-->
+
+    </div>
+    <!-- end content wrapper -->
+
+    <!--footer-->
+    <include th:replace="views/backend/components/footer :: footer"></include>
+
+</div>
+<include th:replace="views/backend/components/scripts :: scripts"></include>
+
+
+<!--delete modal-->
+<!--<script>-->
+<!--    /** Delete Modal **/-->
+<!--    $('document').ready(function () {-->
+
+<!--        /** Delete Modal **/-->
+<!--        $('.table #deleteButton').on('click', function (event) {-->
+<!--            event.preventDefault();-->
+<!--            var href = $(this).attr('href');-->
+<!--            $('#deleteModal #delRef').attr('href', href);-->
+<!--            $('#deleteModal').modal();-->
+<!--        });-->
+
+<!--    });-->
+<!--</script>-->
+
+<!--Delete-->
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete this product?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/delete-product/' + id;
+            }
+        });
+    }
+</script>
+
+
+<!--Update-->
+<script>
+    function confirmUpdate(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to edit this product?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2076c7',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, edit it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // URL to controller
+                window.location.href = '/update-product/' + id;
+            }
+        });
+    }
+</script>
+</body>
+</html>

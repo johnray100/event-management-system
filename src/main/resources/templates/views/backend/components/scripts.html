@@ -1,0 +1,23 @@
+<component th:fragment="scripts" xmlns:th="http://www.thymeleaf.org">
+
+    <!-- jQuery -->
+    <script th:src="@{../../../vendors/plugins/jquery/jquery.min.js}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script th:src="@{../../../vendors/plugins/jquery-ui/jquery-ui.min.js}"></script>
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" th:href="@{vendors/plugins/bootstrap/js/bootstrap.bundle.min.js}">
+    <!-- AdminLTE App -->
+    <script th:src="@{../../../vendors/dist/js/adminlte.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{../../../vendors/dist/js/demo.js}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script th:src="@{../../../vendors/dist/js/pages/dashboard.js}"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <script th:src="@{../../../vendors/assets/js/lib.vendor.bundle.js}"></script>
+    <script th:src="@{../../../vendors/assets/js/core.js}"></script>
+    <script th:src="@{../../../vendors/assets/js/dropify.js}"></script>
+    <script th:src="@{../../../vendors/assets/js/dropify.min.js}"></script>
+
+</component>

@@ -1,0 +1,14 @@
+package jay.inventory_management_system.Supplier.Service;
+
+import jay.inventory_management_system.Supplier.Repository.SupplierRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SupplierService {
+
+    @Autowired
+    private SupplierRepository supplierRepository;
+
+    
+}

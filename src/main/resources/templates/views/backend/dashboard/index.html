@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"
+      style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <include th:replace="views/backend/components/meta :: meta"></include>
+
+    <title>Inventory Management System</title>
+
+    <include th:replace="views/backend/components/style :: styles"></include>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+<div class="wrapper">
+    <!-- navbar -->
+    <include th:replace="views/backend/components/navbar :: navbar"></include>
+    <!-- sidebar -->
+    <include th:replace="views/backend/components/sidebar :: sidebar"></include>
+
+    <!-- content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard</h1>
+                        <p>Welcome, <span sec:authentication="name"></span>!</p>
+                        <p>Your roles: <span sec:authentication="principal.authorities"></span></p>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <p>This content is visible to Admin users only.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Header (Page header) -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <!-- start col panel 1  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-lightblue">
+                            <div class="inner">
+                                <h3 th:text="${category}"></h3>
+                                <p>Category</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- end col panel 1 -->
+
+                    <!-- start col panel 2  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-orange">
+                            <div class="inner">
+                                <h3 th:text="${transaction}"></h3>
+                                <p>Transaction</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- end col panel 2 -->
+
+                    <!-- start col panel 3  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 th:text="${product}"></h3>
+                                <p>Product</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-money-bill"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- end col panel 3 -->
+
+                    <!-- start col panel 4  -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3 th:text="${supplier}"></h3>
+                                <p>Supplier</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-truck"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- end col panel 4 -->
+
+                </div>
+            </div>
+        </section>
+        <!-- end main content -->
+
+    </div>
+    <!-- end content wrapper -->
+
+
+    <!--footer-->
+    <include th:replace="views/backend/components/footer :: footer"></include>
+</div>
+
+<include th:replace="views/backend/components/scripts :: scripts"></include>
+</body>
+</html>

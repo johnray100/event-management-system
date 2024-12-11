@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+<head>
+    <include th:replace="views/backend/components/meta :: meta"></include>
+
+    <title>Inventory Management System</title>
+
+    <include th:replace="views/backend/components/style :: styles"></include>
+
+
+    <!--SweetAlert-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!-- navbar -->
+    <include th:replace="views/backend/components/navbar :: navbar"></include>
+    <!-- sidebar -->
+    <include th:replace="views/backend/components/sidebar :: sidebar"></include>
+
+    <!-- content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6 animated bounceInRight">
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"> Product</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Header (Page header) -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-outline card-lightblue">
+                    <div class="card-header">
+                        <h5><i class="fa fa-plus"></i> Category</h5>
+                    </div>
+
+                    <form th:action="@{/create-product}" th:object="${product}" enctype="multipart/form-data" th:method="post" onsubmit="showSuccessAlert(event)">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="row">
+
+                                        <input type="hidden" id="id" name="id" th:field="*{id}" />
+
+                                        <!-- Product Name -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Product Name:</label>
+                                                <input type="text" th:field="*{productName}" class="form-control" placeholder="Enter Product Name" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Category Dropdown -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Category:</label>
+                                                <select th:field="*{category.id}" class="form-control" required>
+                                                    <option value="" disabled selected>Select Category</option>
+                                                    <option th:each="category : ${categories}"
+                                                            th:value="${category.id}"
+                                                            th:text="${category.categoryName}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Quantity -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Quantity:</label>
+                                                <input type="number" th:field="*{quantity}" class="form-control" placeholder="Enter Quantity" required/>
+                                            </div>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Price:</label>
+                                                <input type="number" step="0.01" th:field="*{price}" class="form-control" placeholder="Enter Price" required/>
+                                            </div>
+                                        </div>
+
+                                        <!-- Description -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Description:</label>
+                                                <textarea th:field="*{description}" class="form-control" placeholder="Enter Description" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn bg-primary">
+                                <i class="fa fa-save"></i> Submit
+                            </button>
+                            <a href="/category" class="btn btn-outline-danger btn-rounded">
+                                <i class="fa fa-times"></i> Close
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- end Main content -->
+
+
+    </div>
+    <!-- end content wrapper -->
+
+
+</div>
+<include th:replace="views/backend/components/scripts :: scripts"></include>
+
+<script>
+    function showSuccessAlert(event) {
+        event.preventDefault(); // Prevent form from submitting
+        Swal.fire({
+            title: 'Success!',
+            text: 'New Employee has been added successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit(); // Submit the form after the alert is closed
+            }
+        });
+    }
+</script>
+</body>
+</html>

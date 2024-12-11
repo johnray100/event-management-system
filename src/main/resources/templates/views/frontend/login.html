@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Inventory Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .register-btn {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-container">
+        <h3 class="text-center mb-3">Inventory Management</h3>
+        <form th:action="@{/login}" method="post" onsubmit="showLoginNotification(event)">
+            <div class="form-group mb-3">
+                <label for="inputUsername">Username</label>
+                <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Enter your username" required autofocus>
+            </div>
+            <div class="form-group mb-3">
+                <label for="inputPassword">Password</label>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Sign In</button>
+            <a th:href="@{/register}" class="btn btn-secondary w-100 register-btn">Register Account</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showLoginNotification(event) {
+        event.preventDefault(); // Prevent form submission
+        Swal.fire({
+            title: 'Logging in...',
+            text: 'Please wait while we process your login.',
+            icon: 'info',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+        }).then(() => {
+            event.target.submit(); // Submit the form after the alert
+        });
+    }
+</script>
+
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('logout')) {
+        Swal.fire({
+            title: 'Logged Out',
+            text: 'You have successfully logged out.',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50',
+            confirmButtonText: 'OK'
+        });
+    }
+</script>
+</body>
+</html>

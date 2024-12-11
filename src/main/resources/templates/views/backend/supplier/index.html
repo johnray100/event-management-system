@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+<head>
+    <include th:replace="views/backend/components/meta :: meta"></include>
+    <title>Inventory Management System</title>
+    <include th:replace="views/backend/components/style :: styles"></include>
+
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!-- Navbar -->
+    <include th:replace="views/backend/components/navbar :: navbar"></include>
+    <!-- Sidebar -->
+    <include th:replace="views/backend/components/sidebar :: sidebar"></include>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Content Header -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <a href="/add-supplier" class="btn bg-lightblue"><i class="fas fa-plus-square"></i> Add
+                            Supplier</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Supplier</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Header -->
+
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-lightblue card-outline">
+                    <div class="card-body">
+
+                        <!-- Transaction Table -->
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="row : ${suppliers}">
+                                <td th:text="${row.id}"></td>
+                                <td th:text="${row.name}"></td>
+                                <td th:text="${row.contact}"></td>
+                                <td th:text="${row.email}"></td>
+                                <td th:text="${row.address}"></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-primary btn-sm"
+                                                th:attr="onclick=|confirmUpdate(${row.id})|">
+                                            <i class="fa fa-pencil-alt"></i> Edit
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm"
+                                                th:attr="onclick=|confirmDelete(${row.id})|">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(transactions)}">
+                                <td colspan="8">No transactions found!</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Main Content -->
+    </div>
+    <!-- End Content Wrapper -->
+
+    <!-- Footer -->
+    <include th:replace="views/backend/components/footer :: footer"></include>
+</div>
+
+<include th:replace="views/backend/components/scripts :: scripts"></include>
+
+<script>
+    // Confirm Delete
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this transaction?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#2076c7',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/delete-supplier/' + id;
+            }
+        });
+    }
+
+    // Confirm Update
+    function confirmUpdate(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to edit this transaction?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2076c7',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, edit it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/update-supplier/' + id;
+            }
+        });
+    }
+</script>
+</body>
+</html>

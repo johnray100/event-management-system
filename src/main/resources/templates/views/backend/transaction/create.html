@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+<head>
+    <include th:replace="views/backend/components/meta :: meta"></include>
+    <title>Inventory Management System</title>
+    <include th:replace="views/backend/components/style :: styles"></include>
+
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!-- Navbar -->
+    <include th:replace="views/backend/components/navbar :: navbar"></include>
+    <!-- Sidebar -->
+    <include th:replace="views/backend/components/sidebar :: sidebar"></include>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Content Header -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6 animated bounceInRight">
+                        <h1 class="m-0">Create Transaction</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Transaction</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Header -->
+
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-outline card-lightblue">
+                    <div class="card-header">
+                        <h5><i class="fa fa-plus"></i> Create Transaction</h5>
+                    </div>
+
+                    <form th:action="@{/create-transaction}" th:object="${transaction}" enctype="multipart/form-data" th:method="post" onsubmit="showSuccessAlert(event)">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+
+                                        <!-- Transaction Type -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="transactionType" class="col-form-label">Transaction Type:</label>
+                                                <select th:field="*{transactionType}" id="transactionType" class="form-control form-rounded" required>
+                                                    <option value="" disabled selected>Select type</option>
+                                                    <option value="SALE">SALE</option>
+                                                    <option value="PURCHASE">PURCHASE</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Product -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="product" class="col-form-label">Product:</label>
+                                                <select th:field="*{product}" id="product" class="form-control form-rounded" required>
+                                                    <option value="" disabled selected>Select product</option>
+                                                    <option th:each="row:${products}" th:value="${row.id}" th:text="${row.productName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Quantity -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="quantity" class="col-form-label">Quantity:</label>
+                                                <input type="number" th:field="*{quantity}" id="quantity" class="form-control form-rounded" placeholder="Enter quantity" min="1" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Transaction Date -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="transactionDate" class="col-form-label">Transaction Date:</label>
+                                                <input type="datetime-local" th:field="*{transactionDate}" id="transactionDate" class="form-control form-rounded" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Total Amount -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="totalAmount" class="col-form-label">Total Amount:</label>
+                                                <input type="number" th:field="*{totalAmount}" id="totalAmount" class="form-control form-rounded" placeholder="Enter total amount" step="0.01" min="0" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Remarks -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="remarks" class="col-form-label">Remarks:</label>
+                                                <textarea th:field="*{remarks}" id="remarks" class="form-control form-rounded" placeholder="Enter remarks (optional)" rows="3"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn bg-primary">
+                                <i class="fa fa-save"></i> Submit
+                            </button>
+                            <a href="/transactions" class="btn btn-outline-danger">
+                                <i class="fa fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- End Main Content -->
+    </div>
+    <!-- End Content Wrapper -->
+</div>
+
+<!-- Scripts -->
+<include th:replace="views/backend/components/scripts :: scripts"></include>
+
+<script>
+    // Success Alert
+    function showSuccessAlert(event) {
+        event.preventDefault(); // Prevent immediate form submission
+        Swal.fire({
+            title: 'Success!',
+            text: 'Transaction has been created successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit(); // Submit the form after the alert
+            }
+        });
+    }
+</script>
+</body>
+</html>
